@@ -5,20 +5,33 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Offline Leaflet Map</title>
   <link rel="stylesheet" href="libs/leaflet/leaflet.css" />
+  <link rel="stylesheet" href="styles.css">
   <script src="libs/leaflet/leaflet.js"></script>
-  <script>
-    function onLoad() {
-      const map = L.map('mapid').setView([42.6990225, 2.863312], 15); // Latitude et longitude Perpignan
+</head>
+<body onload="onLoad()">
+  <div id="mapid">
+    <script class="scripte">
       const mapOptions = {
         minZoom: 0, 
         maxZoom: 15,
         // zoomSnap: 5, 
       };
-      L.tileLayer('tiles/{z}/{x}/{y}.png', mapOptions).addTo(map);
-    }
-  </script>	
-</head>
-<body onload="onLoad()">
-  <div id="mapid" style="height: 500px;"></div>
+      
+      const mobac =L.tileLayer('tiles/{z}/{x}/{y}.png', mapOptions);
+      const street=L.tileLayer('tiles2/{z}/{x}/{y}.png', mapOptions);
+      const map = L.map('mapid',{
+        center: [42.6886591, 2.8948332], // Latitude et longitude France
+        zoom: 13, //zoom 
+        layers:[mobac] //layers selectionné par default 
+      }); 
+      const baseMaps= {
+        "Perpi":mobac,
+        "Autre fond":street
+      };
+      // On créer une boite de controle d'affichage des couches en indiquant les couches
+      var coucheControl= L.control.layers(baseMaps).addTo(map);
+  </script>
+  </div>
+
 </body>
-</html>
+</html> 
